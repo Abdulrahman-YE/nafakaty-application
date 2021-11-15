@@ -11,18 +11,18 @@ class SizeConfig {
   static double? _safeAreaVertical;
   static double? safeBlockHorizontal;
   static double? safeBlockVertical;
-  static Widget horizontalSpaceSmall = SizedBox(width: 10.0);
-  static Widget horizontalSpaceRegular = SizedBox(width: 18.0);
-  static Widget horizontalSpaceMedium = SizedBox(width: 25.0);
-  static Widget horizontalSpaceLarge = SizedBox(width: 50.0);
+  static Widget horizontalSpaceSmall = const SizedBox(width: 10.0);
+  static Widget horizontalSpaceRegular = const SizedBox(width: 18.0);
+  static Widget horizontalSpaceMedium = const SizedBox(width: 25.0);
+  static Widget horizontalSpaceLarge = const SizedBox(width: 50.0);
 
 // Vertical Spacing
-  static Widget verticalSpaceTiny = SizedBox(height: 5.0);
-  static Widget verticalSpaceSmall = SizedBox(height: 10.0);
-  static Widget verticalSpaceRegular = SizedBox(height: 18.0);
-  static Widget verticalSpaceMedium = SizedBox(height: 25);
-  static Widget verticalSpaceLarge = SizedBox(height: 50.0);
-  static Widget verticalSpaceMassive = SizedBox(height: 120.0);
+  static Widget verticalSpaceTiny = const SizedBox(height: 5.0);
+  static Widget verticalSpaceSmall = const SizedBox(height: 10.0);
+  static Widget verticalSpaceRegular = const SizedBox(height: 18.0);
+  static Widget verticalSpaceMedium = const SizedBox(height: 25);
+  static Widget verticalSpaceLarge = const SizedBox(height: 50.0);
+  static Widget verticalSpaceMassive = const SizedBox(height: 120.0);
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
@@ -57,6 +57,5 @@ class SizeConfig {
     verticalSpaceMedium = SizedBox(height: blockSizeVertical! * 4);
     verticalSpaceLarge = SizedBox(height: blockSizeVertical! * 7);
     verticalSpaceMassive = SizedBox(height: blockSizeVertical! * 10);
-    debugPrint(verticalSpaceMassive.toString());
   }
 }
