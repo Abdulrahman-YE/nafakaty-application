@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nafakaty_app/ui/categories_screen.dart';
+import 'package:nafakaty_app/ui/utils/app_theme.dart';
 import 'package:nafakaty_app/ui/welcome_screen.dart';
 import 'package:nafakaty_app/utils/routes.dart';
 
-Future main() async { 
+Future main() async {
   runApp(const App());
 }
 
@@ -14,14 +16,11 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'نفقاتي',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.blue,
-      ),
+      theme: defaultTheme,
       home: const Directionality(
         textDirection: TextDirection.rtl,
-        child: WelcomeScreen(),
-      ),
+        child: CatagoriesScreen(),
+      ), 
       routes: routesMap,
     );
   }

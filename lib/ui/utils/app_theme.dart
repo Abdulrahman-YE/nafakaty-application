@@ -5,44 +5,57 @@ const MaterialColor kcPrimaryColor = Colors.cyan;
 const Color kcSecondaryColor = Colors.tealAccent;
 const Color kcGrayColor = Color(0xff454b50);
 
-TextTheme _textTheme() {
-  return Typography.tall2018;
-}
+const TextStyle blackText = TextStyle(
+  color: Colors.black,
+);
 
-ThemeData lightTheme() {
+const TextStyle buttonText = TextStyle(fontSize: 16.0);
+const TextStyle linkText = TextStyle(
+  fontSize: 16.0,
+  fontWeight: FontWeight.bold,
+  color: Colors.indigo,
+);
+
+final TextStyle shadedTitle = TextStyle(
+    fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.grey.shade600);
+
+final TextStyle messageStyle = shadedTitle.copyWith();
+
+final TextStyle correctMessageStyle = messageStyle.copyWith(
+  color: kcSecondaryColor,
+);
+
+final TextStyle incorrectMessageStyle = messageStyle.copyWith(
+  color: Colors.redAccent,
+);
+
+final ThemeData defaultTheme = buildDefaultTheme();
+
+ThemeData buildDefaultTheme() {
   return ThemeData(
-    brightness: Brightness.light,
-    textTheme: _textTheme(),
-    primarySwatch: kcPrimaryColor,
-    buttonTheme: buttonDarkTheme(),
-    cardTheme: cardLightTheme(),
-    inputDecorationTheme: inputLightTheme(),
-  );
-}
-
-ButtonThemeData buttonDarkTheme() {
-  return ButtonThemeData(
-    buttonColor: kcGrayColor,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-  );
-}
-
-CardTheme cardLightTheme() {
-  return CardTheme(
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: const BorderSide(
-          color: kcPrimaryColor,
-        )),
-  );
-}
-
-InputDecorationTheme inputLightTheme() {
-  return InputDecorationTheme(
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16),
-    ),
-  );
+      primarySwatch: kcPrimaryColor,
+      brightness: Brightness.dark,
+      textTheme: TextTheme(
+        button: buttonText,
+      ),
+      buttonTheme: ButtonThemeData(
+        minWidth: 150,
+        textTheme: ButtonTextTheme.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 16.0,
+          horizontal: 32.0,
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        errorStyle: incorrectMessageStyle,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        contentPadding: const EdgeInsets.all(16.0),
+      ), 
+      iconTheme: IconThemeData(color: kcSecondaryColor)
+      );
 }

@@ -1,7 +1,7 @@
-const String tableCatagories = 'catagories';
+const String tableCategories = 'catagories';
 
 //class containing columns name
-class CatagoryFields {
+class CategoryFields {
   static const String id = '_id';
   static const String title = 'title';
   static const String createdAt = 'createdAt';
@@ -10,12 +10,12 @@ class CatagoryFields {
   static const List<String> values = [id, title, createdAt];
 }
 
-class Catagory {
+class Category {
   final int? id;
   final String title;
   final DateTime createdAt;
 
-  const Catagory({
+  const Category({
     this.id,
     required this.title,
     required this.createdAt,
@@ -24,21 +24,21 @@ class Catagory {
   //Convert the model to json
   Map<String, Object?> toJson() {
     return {
-      CatagoryFields.id: id,
-      CatagoryFields.title: title,
-      CatagoryFields.createdAt: createdAt.toIso8601String(),
+      CategoryFields.id: id,
+      CategoryFields.title: title,
+      CategoryFields.createdAt: createdAt.toIso8601String(),
     };
   }
 
-  static Catagory fromJson(Map<String, Object?> json) {
-    return Catagory(
-        id: json[CatagoryFields.id] as int?,
-        title: json[CatagoryFields.title] as String,
-        createdAt: DateTime.parse([CatagoryFields.createdAt] as String));
+  static Category fromJson(Map<String, Object?> json) {
+    return Category(
+        id: json[CategoryFields.id] as int?,
+        title: json[CategoryFields.title] as String,
+        createdAt: DateTime.parse((json[CategoryFields.createdAt]) as String));
   }
 
-  Catagory copy({int? id, String? title, DateTime? createdAt}) {
-    return Catagory(
+  Category copy({int? id, String? title, DateTime? createdAt}) {
+    return Category(
         id: id ?? this.id,
         title: title ?? this.title,
         createdAt: createdAt ?? this.createdAt);

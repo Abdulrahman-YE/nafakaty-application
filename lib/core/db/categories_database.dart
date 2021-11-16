@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:nafakaty_app/core/models/catagory.dart';
+import 'package:nafakaty_app/core/models/category.dart';
 
-class CatagoriesDatabase {
-  CatagoriesDatabase._init();
+class CategoriesDatabase {
+  CategoriesDatabase._init();
 
-  static final CatagoriesDatabase instance = CatagoriesDatabase._init();
+  static final CategoriesDatabase instance = CategoriesDatabase._init();
 
   static Database? _database;
 
@@ -37,70 +37,70 @@ class CatagoriesDatabase {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
     await db.execute('''
-    CREATE TABLE $tableCatagories (
-      ${CatagoryFields.id} $idType,
-      ${CatagoryFields.title} $textType,
-      ${CatagoryFields.createdAt} $textType
+    CREATE TABLE $tableCategories (
+      ${CategoryFields.id} $idType,
+      ${CategoryFields.title} $textType,
+      ${CategoryFields.createdAt} $textType
     )
     ''');
   }
 
   //insert a row to the catagories table
-  Future<Catagory> insert(Catagory catagory) async {
+  Future<Category> insert(Category category) async {
     //Reference to the database
     final db = await instance.database;
 
     //After inserting the row the insert function return the id of the row
-    final id = await db.insert(tableCatagories, catagory.toJson());
+    final id = await db.insert(tableCategories, category.toJson());
     //Pass the id to the catagory model
-    return catagory.copy(id: id);
+    return category.copy(id: id);
   }
 
   //Read a catagory
-  Future<Catagory> readCatagory(int id) async {
+  Future<Category> readCategory(int id) async {
     //Reference to the databse
     final db = await instance.database;
 
     //This is a parameterized query
-    final map = await db.query(tableCatagories,
-        columns: CatagoryFields.values,
-        where: '${CatagoryFields.id} = ?',
+    final map = await db.query(tableCategories,
+        columns: CategoryFields.values,
+        where: '${CategoryFields.id} = ?',
         whereArgs: [id]);
 
     //Cheack if the request has successed
     if (map.isNotEmpty) {
-      return Catagory.fromJson(map.first);
+      return Category.fromJson(map.first);
     } else {
-      throw Exception('The catagory with $id does not exists');
+      throw Exception('The category with $id does not exists');
     }
   }
 
   //Read all catagories
-  Future<List<Catagory>> readCatagories() async {
+  Future<List<Category>> readCatagories() async {
     //Reference to the databse
     final db = await instance.database;
 
     //This is a parameterized query
-    final result = await db.query(tableCatagories);
+    final result = await db.query(tableCategories);
 
     //Convert the result from a list of Map objects to a list of Catagory objects
-    return result.map((e) => Catagory.fromJson(e)).toList();
+    return result.map((json) => Category.fromJson(json)).toList();
   }
 
   //Update 1 catagory by id
-  Future<int> updateCatagory(Catagory catagory) async {
+  Future<int> updateCatagory(Category category) async {
     final db = await instance.database;
 
-    return db.update(tableCatagories, catagory.toJson(),
-        where: '${CatagoryFields.id} = ?', whereArgs: [catagory.id]);
+    return db.update(tableCategories, category.toJson(),
+        where: '${CategoryFields.id} = ?', whereArgs: [category.id]);
   }
 
   //Delete one catagory by id
   Future<int> deleteCatagory(int id) async {
     final db = await instance.database;
 
-    return db.delete(tableCatagories,
-        where: '${CatagoryFields.id} = ? ', whereArgs: [id]);
+    return db.delete(tableCategories,
+        where: '${CategoryFields.id} = ? ', whereArgs: [id]);
   }
 
   //Close the database
