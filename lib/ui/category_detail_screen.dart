@@ -31,7 +31,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       this.isLoading = true;
     });
     this.category =
-        await CategoriesDatabase.instance.readCategory(widget.categoryId);
+        await CategoriesDatabase.readCategory(widget.categoryId);
     setState(() {
       this.isLoading = false;
     });
@@ -64,7 +64,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
   Widget deleteButton() => IconButton(
       icon: Icon(Icons.delete_outline_outlined),
       onPressed: () async {
-        await CategoriesDatabase.instance.deleteCatagory(widget.categoryId);
+        await CategoriesDatabase.deleteCatagory(widget.categoryId);
         Navigator.of(context).pop();
       });
 

@@ -1,4 +1,4 @@
-const String tableCategories = 'catagories';
+const String categoriesTable = 'catagories';
 
 //class containing columns name
 class CategoryFields {

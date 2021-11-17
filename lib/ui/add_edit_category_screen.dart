@@ -63,7 +63,7 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
       if (isUpdating) {
         await updateCategory();
       } else {
-        await addNote();
+        await addCategory();
       }
 
       Navigator.of(context).pop();
@@ -73,12 +73,12 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
   Future updateCategory() async {
     final category = widget.category!.copy(title: title);
 
-    await CategoriesDatabase.instance.updateCatagory(category);
+    await CategoriesDatabase.updateCatagory(category);
   }
 
-  Future addNote() async {
+  Future addCategory() async {
     final category = Category(title: title, createdAt: DateTime.now());
 
-    await CategoriesDatabase.instance.insert(category);
+    await CategoriesDatabase.insertCategory(category);
   }
 }
