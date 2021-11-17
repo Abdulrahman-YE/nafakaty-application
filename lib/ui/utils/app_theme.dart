@@ -10,16 +10,12 @@ const TextStyle blackText = TextStyle(
 );
 
 const TextStyle buttonText = TextStyle(fontSize: 16.0);
-const TextStyle linkText = TextStyle(
-  fontSize: 16.0,
-  fontWeight: FontWeight.bold,
-  color: Colors.indigo,
-);
 
-final TextStyle shadedTitle = TextStyle(
-    fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.grey.shade600);
+final TextStyle titleText = TextStyle(
+    fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.grey.shade50);
 
-final TextStyle messageStyle = shadedTitle.copyWith();
+final TextStyle messageStyle =
+    titleText.copyWith(fontSize: 14, fontWeight: FontWeight.normal);
 
 final TextStyle correctMessageStyle = messageStyle.copyWith(
   color: kcSecondaryColor,
@@ -35,9 +31,7 @@ ThemeData buildDefaultTheme() {
   return ThemeData(
       primarySwatch: kcPrimaryColor,
       brightness: Brightness.dark,
-      textTheme: TextTheme(
-        button: buttonText,
-      ),
+      textTheme: TextTheme(button: buttonText, subtitle1: messageStyle),
       buttonTheme: ButtonThemeData(
         minWidth: 150,
         textTheme: ButtonTextTheme.primary,
@@ -55,7 +49,8 @@ ThemeData buildDefaultTheme() {
           borderRadius: BorderRadius.circular(10.0),
         ),
         contentPadding: const EdgeInsets.all(16.0),
-      ), 
-      iconTheme: IconThemeData(color: kcSecondaryColor)
-      );
+      ),
+      iconTheme: const IconThemeData(color: kcSecondaryColor),
+      dividerTheme: const DividerThemeData(
+          color: kcSecondaryColor, indent: 2, endIndent: 2));
 }

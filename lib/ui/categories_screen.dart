@@ -82,10 +82,7 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
   Widget buildCategories() => ListView.separated(
       itemCount: categories.length,
       padding: const EdgeInsets.all(8),
-      separatorBuilder: (_, __) => const Divider(
-            color: kcPrimaryColor,
-            height: 1,
-          ),
+      separatorBuilder: (_, __) => const Divider(),
       itemBuilder: (context, index) {
         final category = categories[index];
         return GestureDetector(
