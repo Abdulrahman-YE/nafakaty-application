@@ -23,6 +23,18 @@ class AmountFields {
 
 enum processTypes { income, expanse, loan }
 
+String processTypeToString(processTypes processType) {
+  return processType.index == 0
+      ? 'ايراد'
+      : processType.index == 1
+          ? 'نفقة'
+          : 'قرض';
+}
+
+List<String> processTypesToList() {
+  return processTypes.values.map((e) => processTypeToString(e)).toList();
+}
+
 ///Represents one row in the table
 class Amount {
   final int? id;

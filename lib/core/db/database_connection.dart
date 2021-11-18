@@ -7,7 +7,7 @@ import 'package:nafakaty_app/core/models/category.dart';
 
 class AmountDatabase {
   /// Insert a row to the amounts table in the database
-  Future<Amount> insertAmount(Amount amount) async {
+  static Future<Amount> insertAmount(Amount amount) async {
     //Reference to the database
     final db = await DatabaseConnection.database;
 
@@ -21,12 +21,12 @@ class AmountDatabase {
   ///
   /// Throws an [Exception] if the [id] of the row does not exist.
   /// Otherwise, returns an new instanse of [Amount]
-  Future<Amount> readAmount(int id) async {
+  static Future<Amount> readAmount(int id) async {
     final db = await DatabaseConnection.database;
 
     final map = await db.query(amountTable,
         columns: AmountFields.values,
-        where: '$AmountFields.id = ?',
+        where: '${AmountFields.id} = ?',
         whereArgs: [id]);
 
     if (map.isNotEmpty) {
@@ -38,12 +38,12 @@ class AmountDatabase {
   }
 
   /// Get [List]  of [Amount ]from [amountTable] table based on [AmountFields.categoryId] Column
-  Future<List<Amount>> readAmounts(int categoryId) async {
+  static Future<List<Amount>> readAmounts(int categoryId) async {
     final db = await DatabaseConnection.database;
 
     final result = await db.query(amountTable,
         columns: AmountFields.values,
-        where: '{$AmountFields.categoryId} = ?',
+        where: '${AmountFields.categoryId} = ?',
         whereArgs: [categoryId]);
 
     final amounts = result.map((json) => Amount.fromJson(json)).toList();
@@ -51,7 +51,7 @@ class AmountDatabase {
   }
 
   /// Update an [Amount] row in the database
-  Future<int> updateAmount(Amount amount) async {
+  static Future<int> updateAmount(Amount amount) async {
     final db = await DatabaseConnection.database;
 
     return db.update(amountTable, amount.toJson(),
@@ -59,7 +59,7 @@ class AmountDatabase {
   }
 
   /// Delete an [Amount] from the database
-  Future<int> deleteAmount(int id) async {
+  static Future<int> deleteAmount(int id) async {
     final db = await DatabaseConnection.database;
     return db
         .delete(amountTable, where: '${AmountFields.id} = ?', whereArgs: [id]);
@@ -91,11 +91,12 @@ class DatabaseConnection {
     final path = join(dbPath, dbName);
 
     //Open the database from the file storage
-    return await openDatabase(path,
-        version: 1,
-        onCreate: _createDB,
-        onConfigure: _configureDB,
-        onUpgrade: _updateDB);
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: _createDB,
+      onConfigure: _configureDB,
+    );
   }
 
   static Future _configureDB(Database db) async {
@@ -105,7 +106,13 @@ class DatabaseConnection {
   //Create tables in the database. It will only create tables if the database does not exists already
   static Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    const doubleType = 'REAL NOT NULL';
+    const intType = 'INTEGER NOT NULL';
     const textType = 'TEXT NOT NULL';
+    const textTypeNullable = 'TEXT';
+    const foreignConstaraint =
+        'FOREIGN KEY(${AmountFields.categoryId}) REFERENCES $categoriesTable(${CategoryFields.id}) ON DELETE CASCADE ON UPDATE CASCADE';
+
     await db.execute('''
     CREATE TABLE $categoriesTable (
       ${CategoryFields.id} $idType,
@@ -113,17 +120,6 @@ class DatabaseConnection {
       ${CategoryFields.createdAt} $textType
     )
     ''');
-  }
-
-  //Create tables in the database. It will only create tables if the database does not exists already
-  static Future _updateDB(Database db, int oldVersion, int newVersion) async {
-    const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    const doubleType = 'REAL NOT NULL';
-    const intType = 'INTEGER NOT NULL';
-    const textType = 'TEXT NOT NULL';
-    const textTypeNullable = 'TEXT';
-    const foreignConstaraint =
-        'FOREIGN KEY(${AmountFields.categoryId}) REFERENCES $categoriesTable(${CategoryFields.id}) ON DELETE CASCADE ON UPDATE CASCADE';
 
     await db.execute('''
     CREATE TABLE $amountTable (

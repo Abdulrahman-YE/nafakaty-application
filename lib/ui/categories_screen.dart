@@ -2,13 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:nafakaty_app/core/db/categories_database.dart';
+import 'package:nafakaty_app/core/db/database_connection.dart';
 import 'package:nafakaty_app/core/models/category.dart' as category_model;
-import 'package:nafakaty_app/ui/category_detail_screen.dart';
+import 'package:nafakaty_app/ui/amounts_screen.dart';
 import 'package:nafakaty_app/ui/utils/ui_helpers.dart';
 
 import 'dart:ui' as ui;
-import 'add_edit_category_screen.dart';
 
 class CatagoriesScreen extends StatefulWidget {
   const CatagoriesScreen({Key? key}) : super(key: key);
@@ -173,10 +172,10 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
         final category = categories[index];
         return GestureDetector(
             onTap: () async {
+              debugPrint('id: ${category.id!.toString()}');
               await Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
-                      CategoryDetailScreen(categoryId: category.id!)));
-              refreshCategories();
+                      AmountsScreen(categoryId: category.id!)));
             },
             child: ListTile(
               leading: Icon(Icons.receipt_outlined),
